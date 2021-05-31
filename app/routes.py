@@ -1,7 +1,8 @@
 from app import app
-from flask import jsonify, request
+from flask import request
 from werkzeug.utils import secure_filename
-from definitions import FILE_UPLOAD_DIR
+from upload_to_s3 import upload_to_aws
+from datetime import datetime
 
 
 def allowed_audio_file(filename: str):
@@ -19,7 +20,8 @@ def upload_audio():
         print(file.content_type)
         if file and allowed_audio_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(FILE_UPLOAD_DIR.joinpath(filename))
+            print(type(file))
+            upload_to_aws(file, 'sunbird-noise-storage', f'audio-files/{datetime.now()}-{filename}')
             return f"Successfully uploaded {filename}", 200
     except Exception as e:
         print(e)
@@ -33,7 +35,7 @@ def upload_csv():
         print(file.content_type)
         if file and allowed_csv_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(FILE_UPLOAD_DIR.joinpath(filename))
+            upload_to_aws(file, 'sunbird-noise-storage', f'csv-files/{filename}')
             return f"Successfully uploaded {filename}", 200
     except Exception as e:
         print(e)

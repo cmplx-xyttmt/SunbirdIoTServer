@@ -3,4 +3,8 @@ venv
 .idea
 files
 testing_audio_files
-
+.env
+client_secrets.json
+mycreds.txt
+rootkey.csv
+upload_to_google_drive.py
