@@ -8,3 +8,4 @@ client_secrets.json
 mycreds.txt
 rootkey.csv
 upload_to_google_drive.py
+*__pycache__
